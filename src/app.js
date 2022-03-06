@@ -2,13 +2,14 @@ const express = require('express')
 const app = express()
 const PORT = 3000
 const session = require('express-session')
-
+const isSession = require('./middlewares/isSession')
 
 
 app.use(session({
     secret: "authSecret",
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: { maxAge: 600000 }
 }))
 //Capturar data
 app.use(express.urlencoded({ extended : false}));
@@ -20,10 +21,11 @@ const authRouter = require('./routes/auth')
 
 
 
-
 // Endpoints
 app.use('/auth', authRouter)
-app.use('/api', apiRouter)
+//Middlewares
+//
+app.use('/api', isSession, apiRouter)
 
 
 app.listen(PORT, ()=>{
