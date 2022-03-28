@@ -20,12 +20,16 @@ const apiRouter = require('./routes/indexApi')
 const authRouter = require('./routes/auth')
 
 
-
+app.get('/', (req, res) =>{
+    res.json({
+        conected: true
+    })
+})
 // Endpoints
-app.use('/auth', authRouter)
+// app.use('/auth', authRouter)
 //Middlewares
 //
-app.use('/api', isSession, apiRouter)
+// app.use('/api', isSession, apiRouter)
 
 
 app.listen(PORT, ()=>{
